@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function Navbar({title, icon}) {
+function Navbar({title, icon, color}) {
     return (
-        <nav className='navbar bg-primary'>
+        <nav className='navbar bg-primary' style={{backgroundColor: color}}>
             <h1>
                 <i className={icon} /> {title}
             </h1>

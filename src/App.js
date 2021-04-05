@@ -1,33 +1,14 @@
 import './App.css';
 import Navbar from './components/layout/Navbar'
 import Users from './components/users/Users'
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import Search from './components/users/Search'
 
 function App() {
 
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    /*const getUsers = async () => {
-      const usersFromGitHub = await fetchUsers()
-      setUsers(usersFromGitHub)
-    }
-
-    setLoading(false)
-    getUsers()*/
-  }, [])
-
-/*  const fetchUsers = async () => {
-    const res = await fetch(`https://api.github.com/users?client_id=
-      ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
-      ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
-
-    const data = await res.json()
-    
-    return data
-  } */
+  const [navbarColor, setColor] = useState("purple")
 
   const searchUsers = async (text) => {
     setLoading(true)
@@ -40,13 +21,21 @@ function App() {
       setUsers(data.items)
   }
 
+  const clearUsers = () => {
+    setUsers([])
+    setColor("purple")
+    setLoading(false)
+  }
+
+  const changeColor = (color) => {
+    setColor(color)
+  }
+
   return (
-
-
     <div className="App">
-        <Navbar/>
+        <Navbar color={navbarColor}/>
         <div className='container'>
-          <Search searchUsers={searchUsers}/>
+          <Search searchUsers={searchUsers} clearUsers={clearUsers} showClear={users.length > 0 ? true : false} changeColor={setColor}/>
           <Users users={users} loading={loading}/>
         </div>
     </div>

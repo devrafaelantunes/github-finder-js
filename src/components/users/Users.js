@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import UserItem from './UserItem'
 import Spinner from '../layout/Spinner'
 import PropTypes from 'prop-types'
@@ -9,7 +9,7 @@ function Users({users, loading}) {
     } else {
         return (
             <div style={userStyle}>
-                {users.map((user) => (<UserItem user={user}/>))}
+                {users.map((user) => (<UserItem user={user} key={user.id}/>))}
             </div>
         )
     }
