@@ -6,8 +6,8 @@ import Search from './components/users/Search'
 import About from './components/pages/About'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
-function App() {
 
+const App = () => {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
   const [navbarColor, setColor] = useState("purple")
@@ -29,9 +29,6 @@ function App() {
     setLoading(false)
   }
 
-  const changeColor = (color) => {
-    setColor(color)
-  }
 
   return (
     <Router>
