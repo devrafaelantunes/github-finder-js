@@ -1,8 +1,10 @@
 import './App.css';
 import Navbar from './components/layout/Navbar'
 import Users from './components/users/Users'
-import React, {useState} from 'react'
+import React, {Fragment, useState} from 'react'
 import Search from './components/users/Search'
+import About from './components/pages/About'
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 function App() {
 
@@ -32,13 +34,22 @@ function App() {
   }
 
   return (
-    <div className="App">
-        <Navbar color={navbarColor}/>
-        <div className='container'>
-          <Search searchUsers={searchUsers} clearUsers={clearUsers} showClear={users.length > 0 ? true : false} changeColor={setColor}/>
-          <Users users={users} loading={loading}/>
-        </div>
-    </div>
+    <Router>
+      <div className="App">
+          <Navbar color={navbarColor}/>
+          <div className='container'>
+            <Switch>
+              <Route exact path='/' render={props => (
+                  <Fragment>
+                    <Search searchUsers={searchUsers} clearUsers={clearUsers} showClear={users.length > 0 ? true : false} changeColor={setColor}/>
+                    <Users users={users} loading={loading}/>
+                  </Fragment>
+              )}/>
+              <Route exact path='/about'component={About}/>
+            </Switch>
+          </div>
+      </div>
+    </Router>
   );
 }
 
