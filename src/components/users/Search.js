@@ -1,10 +1,12 @@
 import Alert from './Alert'
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import PropTypes from 'prop-types'
+import GithubContext from '../../context/github/githubContext'
 
 
 
 function Search(props) {
+    const githubContext = useContext(GithubContext)
     const [text, setText] = useState('')
     const [error, setError] = useState(false)
 
@@ -17,12 +19,12 @@ function Search(props) {
         e.preventDefault();
         if(text === "") {
 
-            props.changeColor("red")
+            githubContext.setColor("red")
             setError(true)
         } else {
             setError(false)
-            props.searchUsers(text)
-            props.changeColor("green")
+            githubContext.searchUsers(text)
+            githubContext.setColor("green")
             setText('')
         }
     }
@@ -51,7 +53,6 @@ function Search(props) {
 }
 
 Search.propTypes = {
-    searchUsers: PropTypes.func.isRequired,
     clearUsers: PropTypes.func.isRequired,
     showClear: PropTypes.bool.isRequired
 }

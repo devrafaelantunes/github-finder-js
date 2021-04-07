@@ -41,14 +41,7 @@ const App = () => {
   }
 
   // Search Users
-  const searchUsers = async (text) => {
-    setLoading(true)
-    const res = await fetch(`https://api.github.com/search/users?q=${text}`)
-
-      const data = await res.json()
-      setLoading(false)
-      setUsers(data.items)
-  }
+  
 
   // Clear Users
   const clearUsers = () => {
@@ -67,10 +60,8 @@ const App = () => {
                 <Route exact path='/' render={props => (
                     <Fragment>
                       <Search 
-                        searchUsers={searchUsers}
                         clearUsers={clearUsers}
                         showClear={users.length > 0 ? true : false}
-                        changeColor={setColor}
                       />
                       <Users users={users} loading={loading}/>
                     </Fragment>
