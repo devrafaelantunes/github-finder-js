@@ -1,5 +1,4 @@
 import React, {useEffect, Fragment} from 'react'
-import Spinner from '../layout/Spinner'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import Repos from '../repos/Repos'
@@ -8,7 +7,8 @@ function User(props) {
     useEffect(() => {
         props.getUser(props.match.params.login)
         props.getUserRepos(props.match.params.login)
-        props.setUserColor()
+        props.changeColor("orange")
+        // eslint-disable-next-line
     }, [])
     
     const {

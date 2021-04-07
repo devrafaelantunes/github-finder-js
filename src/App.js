@@ -39,6 +39,7 @@ const App = () => {
     setUserRepos(data)
   }
 
+  // Search Users
   const searchUsers = async (text) => {
     setLoading(true)
     const res = await fetch(`https://api.github.com/search/users?q=${text}`)
@@ -48,14 +49,12 @@ const App = () => {
       setUsers(data.items)
   }
 
+  // Clear Users
   const clearUsers = () => {
     setUsers([])
     setColor("purple")
     setLoading(false)
   }
-
-  const setUserColor = () => setColor("orange")
-
 
   return (
     <Router>
@@ -78,7 +77,7 @@ const App = () => {
                   loading={loading}
                   getUserRepos={getUserRepos}
                   repos={repos}  
-                  setUserColor={setUserColor}
+                  changeColor={setColor}
                 />
               )}/>
             </Switch>

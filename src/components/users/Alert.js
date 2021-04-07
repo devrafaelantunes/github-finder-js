@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../layout/Navbar'
 import {FaTimes} from 'react-icons/fa'
 
 function Alert({reason}) {
