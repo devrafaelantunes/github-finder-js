@@ -2,13 +2,14 @@ import React, {useEffect, Fragment} from 'react'
 import Spinner from '../layout/Spinner'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
+import Repos from '../repos/Repos'
 
 function User(props) {
     useEffect(() => {
         props.getUser(props.match.params.login)
         props.getUserRepos(props.match.params.login)
         props.setUserColor()
-    })
+    }, [])
     
     const {
         name,
@@ -92,6 +93,8 @@ function User(props) {
                 <div className="badge badge-dark">Public Gists: {public_gists}</div>
             </div>
 
+            <Repos repos={props.repos}/>
+
             <Link to='/' className='btn btn-light'>
                 Back to Search
             </Link>
@@ -102,7 +105,6 @@ function User(props) {
 
 User.propTypes = {
     loading: PropTypes.bool,
-    user: PropTypes.object.isRequired,
     getUser: PropTypes.func.isRequired,
     getUserRepos: PropTypes.func.isRequired
 }
