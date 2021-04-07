@@ -6,6 +6,7 @@ import React, {Fragment, useState} from 'react'
 import Search from './components/users/Search'
 import About from './components/pages/About'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import GithubState from './context/github/GithubState'
 
 
 const App = () => {
@@ -57,33 +58,40 @@ const App = () => {
   }
 
   return (
-    <Router>
-      <div className="App">
-          <Navbar color={navbarColor}/>
-          <div className='container'>
-            <Switch>
-              <Route exact path='/' render={props => (
-                  <Fragment>
-                    <Search searchUsers={searchUsers} clearUsers={clearUsers} showClear={users.length > 0 ? true : false} changeColor={setColor}/>
-                    <Users users={users} loading={loading}/>
-                  </Fragment>
-              )}/>
-              <Route exact path='/about'component={About}/>
-              <Route exact path='/user/:login' render={props =>( 
-                <User
-                  {...props}
-                  getUser={getUser}
-                  user={user}
-                  loading={loading}
-                  getUserRepos={getUserRepos}
-                  repos={repos}  
-                  changeColor={setColor}
-                />
-              )}/>
-            </Switch>
-          </div>
-      </div>
-    </Router>
+    <GithubState>
+      <Router>
+        <div className="App">
+            <Navbar color={navbarColor}/>
+            <div className='container'>
+              <Switch>
+                <Route exact path='/' render={props => (
+                    <Fragment>
+                      <Search 
+                        searchUsers={searchUsers}
+                        clearUsers={clearUsers}
+                        showClear={users.length > 0 ? true : false}
+                        changeColor={setColor}
+                      />
+                      <Users users={users} loading={loading}/>
+                    </Fragment>
+                )}/>
+                <Route exact path='/about'component={About}/>
+                <Route exact path='/user/:login' render={props =>( 
+                  <User
+                    {...props}
+                    getUser={getUser}
+                    user={user}
+                    loading={loading}
+                    getUserRepos={getUserRepos}
+                    repos={repos}  
+                    changeColor={setColor}
+                  />
+                )}/>
+              </Switch>
+            </div>
+        </div>
+      </Router>
+    </GithubState>
   );
 }
 
