@@ -11,10 +11,13 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 const App = () => {
   const [users, setUsers] = useState([])
   const [user, setUser] = useState([])
+  const [repos, setUserRepos] = useState([])
   const [loading, setLoading] = useState(false)
   const [navbarColor, setColor] = useState("purple")
 
 
+
+  // Get User
   const getUser = async(username) => {
     setLoading(true)
     const res = await fetch(`https://api.github.com/users/${username}?client_id=
@@ -24,6 +27,20 @@ const App = () => {
     const data = await res.json()
     setLoading(false)
     setUser(data)
+
+    console.log(data)
+  }
+
+  // Get Users Repos
+  const getUserRepos = async(username) => {
+    setLoading(true)
+    const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=
+      ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
+      ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
+
+    const data = await res.json()
+    setLoading(false)
+    setUserRepos(data)
 
     console.log(data)
   }
@@ -45,6 +62,8 @@ const App = () => {
     setLoading(false)
   }
 
+  const setUserColor = () => setColor("orange")
+
 
   return (
     <Router>
@@ -60,7 +79,15 @@ const App = () => {
               )}/>
               <Route exact path='/about'component={About}/>
               <Route exact path='/user/:login' render={props =>( 
-                <User {...props} getUser={getUser} user={user} loading={loading}/>
+                <User
+                  {...props}
+                  getUser={getUser}
+                  user={user}
+                  loading={loading}
+                  getUserRepos={getUserRepos}
+                  repos={repos}  
+                  setUserColor={setUserColor}
+                />
               )}/>
             </Switch>
           </div>
