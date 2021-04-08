@@ -8,76 +8,23 @@ import About from './components/pages/About'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import GithubState from './context/github/GithubState'
 
-
 const App = () => {
-  const [users, setUsers] = useState([])
-  const [user, setUser] = useState([])
-  const [repos, setUserRepos] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [navbarColor, setColor] = useState("purple")
-
-
-
-  // Get User
-  const getUser = async(username) => {
-    setLoading(true)
-    const res = await fetch(`https://api.github.com/users/${username}`)
-
-    const data = await res.json()
-    setLoading(false)
-    setUser(data)
-
-    console.log(data)
-  }
-
-  // Get Users Repos
-  const getUserRepos = async(username) => {
-    setLoading(true)
-    const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`)
-
-    const data = await res.json()
-    setLoading(false)
-    setUserRepos(data)
-  }
-
-  // Search Users
-  
-
-  // Clear Users
-  const clearUsers = () => {
-    setUsers([])
-    setColor("purple")
-    setLoading(false)
-  }
 
   return (
     <GithubState>
       <Router>
         <div className="App">
-            <Navbar color={navbarColor}/>
+            <Navbar/>
             <div className='container'>
               <Switch>
                 <Route exact path='/' render={props => (
                     <Fragment>
-                      <Search 
-                        clearUsers={clearUsers}
-                        showClear={users.length > 0 ? true : false}
-                      />
-                      <Users users={users} loading={loading}/>
+                      <Search/>
+                      <Users/>
                     </Fragment>
                 )}/>
                 <Route exact path='/about'component={About}/>
-                <Route exact path='/user/:login' render={props =>( 
-                  <User
-                    {...props}
-                    getUser={getUser}
-                    user={user}
-                    loading={loading}
-                    getUserRepos={getUserRepos}
-                    repos={repos}  
-                    changeColor={setColor}
-                  />
-                )}/>
+                <Route exact path='/user/:login' component={User}/>
               </Switch>
             </div>
         </div>

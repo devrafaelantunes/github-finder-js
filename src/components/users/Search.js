@@ -45,16 +45,11 @@ function Search(props) {
                 onChange={onChange}/>
                 <input type='submit' value='Search' className='btn btn-dark btn-block'/>
             </form>
-            {props.showClear && <button className="btn btn-light btn-block" onClick={onClear}>Clear</button>}
+            {githubContext.users.length > 0 && <button className="btn btn-light btn-block" onClick={githubContext.clearUsers}>Clear</button>}
 
             {error && <Alert reason="Your search cannot be empty"/>}
         </div>
     )
-}
-
-Search.propTypes = {
-    clearUsers: PropTypes.func.isRequired,
-    showClear: PropTypes.bool.isRequired
 }
 
 export default Search;

@@ -1,13 +1,16 @@
-import React, {useEffect, Fragment} from 'react'
-import PropTypes from 'prop-types'
+import React, {useEffect, Fragment, useContext} from 'react'
 import {Link} from 'react-router-dom'
 import Repos from '../repos/Repos'
+import GithubContext from '../../context/github/githubContext'
 
 function User(props) {
+    const githubContext = useContext(GithubContext)
+
+    const {getUser, loading, user, repos, getUserRepos} = githubContext
+    
     useEffect(() => {
-        props.getUser(props.match.params.login)
-        props.getUserRepos(props.match.params.login)
-        props.changeColor("orange")
+        getUser(props.match.params.login)
+        getUserRepos(props.match.params.login)
         // eslint-disable-next-line
     }, [])
     
@@ -25,7 +28,7 @@ function User(props) {
         public_repos,
         public_gists,
         hireable
-    } = props.user;
+    } = user;
 
     return (
         <Fragment>
@@ -93,7 +96,7 @@ function User(props) {
                 <div className="badge badge-dark">Public Gists: {public_gists}</div>
             </div>
 
-            <Repos repos={props.repos}/>
+            <Repos repos={repos}/>
 
             <Link to='/' className='btn btn-light'>
                 Back to Search
@@ -101,12 +104,6 @@ function User(props) {
         
         </Fragment>
     )
-}
-
-User.propTypes = {
-    loading: PropTypes.bool,
-    getUser: PropTypes.func.isRequired,
-    getUserRepos: PropTypes.func.isRequired
 }
 
 export default User

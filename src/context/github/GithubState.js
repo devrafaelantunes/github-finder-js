@@ -6,6 +6,7 @@ import {
     GET_USER,
     GET_REPOS,
     SET_LOADING,
+    CLEAR_USERS,
     SET_COLOR
 } from '../types'
 
@@ -16,10 +17,23 @@ const GithubState = props => {
         user: {},
         repos: [],
         color: "purple",
-        loading: false
+        loading: false,
+        error: false
     }
 
     const [state, dispatch] = useReducer(GithubReducer, initialState)
+
+    // Get Repos
+    const getUserRepos = async(username) => {
+        const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`)
+    
+        const data = await res.json()
+        
+        dispatch({
+            type: GET_REPOS,
+            payload: data
+        })
+    }
 
 
     // Search Users
@@ -37,12 +51,19 @@ const GithubState = props => {
 
 
     // Get User
-
-
-    // Get Repos
-
+    const getUser = async(username) => {
+        setLoading(true)
+        const res = await fetch(`https://api.github.com/users/${username}`)
+    
+        const data = await res.json()
+        dispatch({
+            type: GET_USER,
+            payload: data
+        })
+    }
 
     // Clear Users
+    const clearUsers = () => dispatch({type: CLEAR_USERS})
 
 
     // Set Loading
@@ -64,7 +85,10 @@ const GithubState = props => {
             loading: state.loading,
             color: state.color,
             searchUsers,
-            setColor
+            setColor,
+            clearUsers,
+            getUser,
+            getUserRepos
         }}>
             {props.children}
 
