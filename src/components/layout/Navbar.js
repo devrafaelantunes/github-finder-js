@@ -1,26 +1,25 @@
-import React from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import React, {useContext} from 'react'
+import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
+import GithubContext from '../../context/github/githubContext'
 
-function Navbar({title, icon, color}) {
-    const location = useLocation()     
+function Navbar({title, icon}) {
+    const githubContext = useContext(GithubContext)  
+    const onHomeClick = () => githubContext.setColor("purple")
+    const onAboutClick = () => githubContext.setColor("blue")
     
     return (
-        <nav className='navbar bg-primary' style={
-                location.pathname === '/about' ? 
-                {backgroundColor: "blue"} :
-                {backgroundColor: color}
-            }>
+        <nav className='navbar bg-primary' style={{backgroundColor: githubContext.color}}>
             <h1>
                 <i className={icon} /> {title}
             </h1>
 
             <ul>
                 <li>
-                    <Link to="/">Home</Link>                    
+                    <Link to="/" onClick={onHomeClick}>Home</Link>                    
                 </li>
                 <li>
-                    <Link to="/about">About</Link>  
+                    <Link to="/about" onClick={onAboutClick}>About</Link>  
                 </li>
             </ul>
         </nav>

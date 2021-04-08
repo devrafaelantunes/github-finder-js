@@ -5,7 +5,7 @@ import GithubContext from '../../context/github/githubContext'
 
 
 
-function Search(props) {
+function Search() {
     const githubContext = useContext(GithubContext)
     const [text, setText] = useState('')
     const [error, setError] = useState(false)
@@ -31,7 +31,7 @@ function Search(props) {
 
     const onClear = () => {
         setError(false)
-        props.clearUsers()
+        githubContext.clearUsers()
     }
 
     return (

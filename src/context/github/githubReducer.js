@@ -20,7 +20,7 @@ export default (state, action) => {
                 ...state,
                 user: action.payload,
                 loading: false,
-                color: "green"
+                color: "orange"
             }
         case SET_COLOR:
             return {
@@ -39,7 +39,8 @@ export default (state, action) => {
             return {
                 ...state,
                 users: action.payload,
-                loading: false
+                loading: false,
+                color: "green"
             }
         case SET_LOADING:
             return {
